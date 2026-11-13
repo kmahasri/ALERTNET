@@ -192,3 +192,95 @@
   font-weight: 700 !important;
   text-shadow: none !important;
 }
+/* FIX: SOS modal appearing behind the map */
+.leaflet-container {
+  position: relative;
+  z-index: 0 !important;
+}
+
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 1 !important;
+}
+
+/* Keep popups and overlays above the map */
+.modal-overlay,
+.modal-backdrop,
+.sos-modal,
+.sos-overlay {
+  position: fixed;
+  z-index: 9999 !important;
+}
+
+.modal-overlay,
+.modal-backdrop,
+.sos-overlay {
+  inset: 0;
+}
+
+.sos-modal {
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* ALERTNET - Fix SOS popup appearing behind the map */
+
+.modalback {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 24px !important;
+  overflow-y: auto !important;
+  background: rgba(10, 35, 34, 0.78) !important;
+  isolation: isolate !important;
+}
+
+.modal {
+  position: relative !important;
+  z-index: 100000 !important;
+  width: min(520px, 100%) !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  margin: auto !important;
+}
+
+.leaflet-container {
+  z-index: 0 !important;
+}
+
+
+/* ALERTNET - SOS modal above geographical map */
+
+.modalback {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 9999999 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+  background: rgba(10, 35, 34, 0.78) !important;
+  isolation: isolate !important;
+}
+
+.modalback .modal {
+  position: relative !important;
+  z-index: 10000000 !important;
+  width: min(520px, 100%) !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  margin: auto !important;
+  background: #fffdf9 !important;
+}
+
+.leaflet-container,
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 1 !important;
+}

@@ -1,5 +1,8 @@
 
 import { useState } from "react";
+import "leaflet/dist/leaflet.css";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import L from "leaflet";
 
 const incidents = [
   { id: "INC-2041", title: "Severe Flooding", place: "Riverside Colony", level: "Critical", time: "Just now", icon: "⚠" },
@@ -175,17 +178,48 @@ function App() {
             <div className="panel">
               <div className="panelhead"><span className="paneltitle">◉ &nbsp; Live Incident Map</span><span className="muted">Flood risk · Demo map</span></div>
               <div className="map">
-                <div className="river"></div><div className="road one"></div><div className="road two"></div><div className="road three"></div>
-                <div className="mapcaption">● LIVE INCIDENT OVERVIEW</div>
-                <div className="hotspot"><span>⚠</span></div>
-                <div className="pin p1"><b>!</b></div><div className="pin p2"><b>⌂</b></div><div className="pin p3"><b>!</b></div><div className="pin p4"><b>+</b></div>
-                <div className="maptools"><button>＋</button><button>－</button><button>⌖</button></div>
-                <div className="maplegend"><b>INCIDENT SEVERITY</b>
-                  <div className="legendrow"><i className="dot" style={{background:"#d94d43"}}/> Critical</div>
-                  <div className="legendrow"><i className="dot" style={{background:"#e4a53d"}}/> Urgent</div>
-                  <div className="legendrow"><i className="dot" style={{background:"#3998aa"}}/> Informational</div>
-                </div>
-              </div>
+<MapContainer
+  center={[17.385, 78.4867]}
+  zoom={13}
+  scrollWheelZoom={true}
+  style={{ height: "400px", width: "100%", borderRadius: "12px" }}
+>
+  <TileLayer
+    attribution='&copy; OpenStreetMap contributors'
+    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  />
+
+  {[
+
+  { name: "Severe Flooding", place: "Riverside Colony", level: "Critical", position: [17.431, 78.448], color: "#e65345" },
+  { name: "People Stranded", place: "Lakeview Street", level: "Urgent", position: [17.423, 78.473], color: "#e5a33b" },
+  { name: "Road Blockage", place: "Hilltop Road", level: "Informational", position: [17.405, 78.461], color: "#3299ad" },
+  { name: "Medical Emergency", place: "Old Market", level: "Critical", position: [17.385, 78.486], color: "#e65345" },
+  ].map((item, index) => (
+    <Marker
+      key={index}
+      position={item.position}
+      icon={L.divIcon({
+        className: "",
+        html: `<div style="background:${item.color};width:22px;height:22px;border:3px solid white;border-radius:50%;box-shadow:0 2px 8px #555"></div>`,
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      })}
+    >
+      <Popup>
+        <strong>{item.name}</strong>
+        <br />
+        {item.place}
+        <br />
+        Severity: {item.level}
+        <br />
+        <button onClick={() => setPage("Live Incidents")}>
+          View incident
+        </button>
+      </Popup>
+    </Marker>
+  ))}
+</MapContainer>              </div>
             </div>
 
             <div className="rightcol">
